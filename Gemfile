@@ -6,3 +6,5 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
 gem "pry", "~> 0.11.3"
+
+gem "ruby2d", "~> 0.5.1"

@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "conways"
+require "ruby2d"
+
+size = 10
+width = 100
+height = 100
+
+set title: "Conways' Game of Life"
+set width: width*size
+set height: height*size
+
+
+board = []
+0.upto(height) do |y|
+  board[y] = []
+  0.upto(width) do |x|
+    board[y][x] = Square.new(x: 10*x, y: 10*y, size: size, color: 'white')
+  end
+end
+
+game = Conways::Game.new
+game.set_random_state(width, height)
+
+update do
+  new_state = game.next_gen
+  0.upto(width) do |x|
+    0.upto(height) do |y|
+      board[y][x].color = new_state[y][x] == 1 ? 'random' : 'white'
+    end
+  end
+end
+
+show

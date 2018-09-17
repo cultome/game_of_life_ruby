@@ -1,12 +1,12 @@
 require "conways/version"
 
 module Conways
-  attr_reader :state
-  attr_reader :width
-  attr_reader :height
-
   class Game
-    def initialize(initial_state)
+    attr_reader :state
+    attr_reader :width
+    attr_reader :height
+
+    def initialize(initial_state=[[]])
       @state = initial_state
       @width = initial_state.first.size-1
       @height = initial_state.size-1
@@ -19,6 +19,10 @@ module Conways
         new_state[y][x] = will_live?(x,y) ? 1: 0
       end
       @state = new_state
+    end
+
+    def cell(x,y)
+      state[y][x]
     end
 
     def will_live?(x,y)
@@ -52,6 +56,20 @@ module Conways
       state.each do |row|
         puts row.join("")
       end
+    end
+
+    def set_random_state(width, height, prob=0.2)
+      @width = width
+      @height = height
+
+      rand_state = []
+      0.upto(height){ rand_state << [] }
+
+      each_cell do |x,y|
+        rand_state[y][x] = rand < prob ? 1 : 0
+      end
+
+      @state = rand_state
     end
 
     private
